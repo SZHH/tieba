@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>帖子</title>
+</head>
+<body>
+	{if condition="$Request.session.authority == 1"}
+	用户名：{$Request.session.username}<br>
+	<h4><a href="/user/logout">注销</a></h4>
+	-----管理员模式-----<br>
+	{else/}
+		{if condition="$Request.session.authority == '' "}
+		-----游客模式-----<br>
+		{else/}
+		用户名：{$Request.session.username}<br>
+		<h4><a href="/user/logout">注销</a></h4>
+		--------------------<br>
+		{/if}
+	{/if}
+	<h2>帖子</h2>
+	{volist name="result" id="tie"}
+	<a href="/tie/{$tie.id}">{$tie.title}</a>&nbsp;&nbsp;({$tie.postdate})<br>
+	{/volist}
+	{if condition="$Request.session.authority != '' "}
+	<h3><a href="/tie/addtie">发帖</a></h3>
+	{else/}
+	<h3>游客身份无法发帖！</h3>
+	<a href="/user">登录</a>&nbsp;&nbsp;<a href="/user/register">注册</a>
+	{/if}
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>中转</title>
+</head>
+<body>
+	登录成功！
+	<form method="post" action="/tieba">
+		<input type="hidden" name="username" value="{$Request.session.username}">
+		<input type="hidden" name="authority" value="{$result.authority}">
+		<button type="submit">进入主页</button>
+	</form>
+</body>
+</html>

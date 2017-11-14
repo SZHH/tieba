@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>帖子内容</title>
+</head>
+<body>
+	{if condition="$Request.session.authority == 1"}
+	用户名：{$Request.session.username}<br>
+	<h4><a href="/user/logout">注销</a></h4>
+	-----管理员模式-----<br>
+	{else/}
+	{if condition="$Request.session.authority == '' "}
+	-----游客模式-----<br>
+	{else/}
+	用户名：{$Request.session.username}<br>
+	<h4><a href="/user/logout">注销</a></h4>
+	--------------------<br>
+	{/if}
+	{/if}
+	<table>
+		<thead>
+			<tr>
+				<th><h2>帖子内容</h2></th>
+			</tr>
+		</thead>
+		<tbody>
+			{volist name="result" id="tie"}
+			<tr>
+				<td>{$tie.title}</td>
+				<td>{$tie.content}</td>
+				<td>({$tie.postdate})</td>
+				{if condition="$tie['pid'] eq 0"}
+					{if condition="$Request.session.authority != ''"}
+					<td><a href="/ties/gentie/{$tie.id}">跟帖</a></td>
+					{else/}
+					<td>游客身份无法跟帖！</td>
+					{/if}
+				{else /}
+					{if condition="$Request.session.authority != ''"}
+					<td><a href="/ties/huifutie/{$tie.id}">引用回复</a></td>
+					{else/}
+					<td>游客身份无法回复！</td>
+					{/if}
+					<td><a href="/ties/index2/{$tie.id}">查看回复</a></td>
+				{/if}
+			</tr>
+			{/volist}
+		</tbody>
+	</table>
+	{if condition="$Request.session.authority != ''"}
+	<h3><a href="/tie/addtie">发帖</a></h3>
+	{else/}
+	<h3>游客身份无法发帖！</h3>
+	<a href="/user">登录</a>&nbsp;&nbsp;<a href="/user/register">注册</a>
+	{/if}
+	
+</body>
+</html>
